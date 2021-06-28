@@ -8,7 +8,7 @@ android {
     compileSdkVersion 28
 
     defaultConfig {
-        applicationId "com.codepath.apps.restclienttemplate"
+        applicationId "com.codepath.apps.com.example.simpletweet"
         minSdkVersion 21
         targetSdkVersion 28
 
