@@ -3,13 +3,23 @@ package com.example.simpletweet.models;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Parcel
 public class Tweet {
     public String body, createdAt;
     public User author;
+
+    // Constructor
+    public Tweet(JSONObject jsonObject) throws JSONException {
+        this.fromJson(jsonObject);
+    }
+
+    // Empty constructor
+    public Tweet() {};
 
     // Returns a single tweet from a JSON object
     public static Tweet fromJson(JSONObject jsonObject) throws JSONException {
