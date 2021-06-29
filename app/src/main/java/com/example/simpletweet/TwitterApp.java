@@ -1,10 +1,11 @@
-package com.codepath.apps.simpletweet;
+package com.example.simpletweet;
 
 import android.app.Application;
 import android.content.Context;
 
 import androidx.room.Room;
 
+import com.example.simpletweet.MyDatabase;
 import com.facebook.stetho.Stetho;
 
 /*

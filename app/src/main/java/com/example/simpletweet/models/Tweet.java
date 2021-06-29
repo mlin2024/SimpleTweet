@@ -1,4 +1,4 @@
-package com.codepath.apps.simpletweet.models;
+package com.example.simpletweet.models;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -1,4 +1,4 @@
-package com.codepath.apps.simpletweet;
+package com.example.simpletweet;
 
 import androidx.appcompat.app.AppCompatActivity;
 

@@ -1,4 +1,4 @@
-package com.codepath.apps.simpletweet.models;
+package com.example.simpletweet.models;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

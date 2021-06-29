@@ -8,9 +8,9 @@ android {
     compileSdkVersion 28
 
     defaultConfig {
-        applicationId "com.codepath.apps.com.example.simpletweet"
+        applicationId "com.example.simpletweet"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 29
 
         // Room schemas
         javaCompileOptions {
