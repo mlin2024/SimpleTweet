@@ -5,7 +5,7 @@ def apikeyProperties = new Properties()
 apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     defaultConfig {
         applicationId "com.example.simpletweet"
@@ -53,4 +53,5 @@ dependencies {
     implementation 'org.parceler:parceler-api:1.1.12'
     annotationProcessor 'org.parceler:parceler:1.1.12'
     implementation 'jp.wasabeef:glide-transformations:4.1.0'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
 }
