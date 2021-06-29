@@ -54,6 +54,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         TextView screennameTextView;
         TextView nameTextView;
         TextView bodyTextView;
+        TextView timestampTextView;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
@@ -61,6 +62,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             screennameTextView = itemView.findViewById(R.id.screennameTextView);
             nameTextView = itemView.findViewById(R.id.nameTextView);
             bodyTextView = itemView.findViewById(R.id.bodyTextView);
+            timestampTextView = itemView.findViewById(R.id.timestampTextView);
         }
 
         public void bind(Tweet tweet) {
@@ -72,6 +74,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             screennameTextView.setText(tweet.getAuthor().screenName);
             nameTextView.setText("@" + tweet.getAuthor().name);
             bodyTextView.setText(tweet.getBody());
+            timestampTextView.setText(tweet.getCreatedAt());
         }
     }
 }
