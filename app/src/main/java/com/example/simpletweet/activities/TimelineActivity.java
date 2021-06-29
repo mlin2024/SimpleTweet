@@ -1,5 +1,6 @@
 package com.example.simpletweet.activities;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,6 +20,7 @@ import com.example.simpletweet.adapters.TweetAdapter;
 import com.example.simpletweet.models.Tweet;
 
 import org.json.JSONException;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,7 @@ import okhttp3.Headers;
 
 public class TimelineActivity extends AppCompatActivity {
     public static final String TAG = "TimelineActivity";
+    private final int COMPOSE_REQUEST_CODE = 413;
 
     TwitterClient client;
     List<Tweet> tweets;
@@ -47,7 +50,6 @@ public class TimelineActivity extends AppCompatActivity {
         timelineRecyclerView.setAdapter(tweetAdapter);
         Toolbar timelineToolbar = (Toolbar) findViewById(R.id.timelineToolbar);
         setSupportActionBar(timelineToolbar);
-        timelineToolbar.setTitle("Twitter");
 
         populateHomeTimeline();
     }
@@ -87,13 +89,37 @@ public class TimelineActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.logoutMenuItem) {
-            logout();
-            return true;
-        }
+        switch (id) {
+            case R.id.logoutMenuItem:
+                logout();
+                return true;
 
-        return super.onOptionsItemSelected(item);
+            case R.id.composeMenuItem:
+                Intent intent = new Intent(TimelineActivity.this, ComposeActivity.class);
+                TimelineActivity.this.startActivityForResult(intent, COMPOSE_REQUEST_CODE);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case COMPOSE_REQUEST_CODE:
+                    Tweet tweet = Parcels.unwrap(data.getParcelableExtra(Tweet.class.getSimpleName()));
+                    tweets.add(0, tweet);
+                    tweetAdapter.notifyItemInserted(0);
+                    timelineRecyclerView.smoothScrollToPosition(0);
+                default:
+                    super.onActivityResult(requestCode, resultCode, data);
+            }
+        }
+        else{
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     public void logout() {

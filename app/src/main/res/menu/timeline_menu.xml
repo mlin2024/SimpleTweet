@@ -4,6 +4,13 @@
     tools:context="com.example.simpletweet.activities.TimelineActivity">
 
     <item
+        android:id="@+id/composeMenuItem"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="Compose"
+        android:tooltipText="Compose"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/logoutMenuItem"
         android:icon="@android:drawable/ic_menu_set_as"
         android:title="Logout"

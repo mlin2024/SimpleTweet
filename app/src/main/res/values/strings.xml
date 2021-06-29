@@ -2,8 +2,12 @@
 <resources>
 
     <string name="app_name">SimpleTweet</string>
-    <string name="login_label">Log in</string>
+    <string name="login_label">Log In</string>
     <string name="intent_scheme">oauth</string>
     <string name="intent_host">cprest</string>
+    <string name="tweet">Tweet</string>
+    <string name="compose">Compose a Tweet</string>
+    <string name="timeline">Timeline</string>
+    <string name="login">Login</string>
 
 </resources>
