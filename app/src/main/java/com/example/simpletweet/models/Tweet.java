@@ -40,4 +40,16 @@ public class Tweet {
 
         return tweets;
     }
+
+    public String getBody() {
+        return body;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
 }
