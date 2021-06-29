@@ -1,4 +1,4 @@
-package com.example.simpletweet;
+package com.example.simpletweet.activities;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -7,11 +7,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
+import com.example.simpletweet.R;
+import com.example.simpletweet.TwitterApp;
+import com.example.simpletweet.TwitterClient;
 import com.example.simpletweet.models.SampleModel;
 import com.example.simpletweet.models.SampleModelDao;
 import com.codepath.oauth.OAuthLoginActionBarActivity;
-import com.example.simpletweet.models.SampleModel;
-import com.example.simpletweet.models.SampleModelDao;
 
 public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 	public static final String TAG = "LoginActivity";
