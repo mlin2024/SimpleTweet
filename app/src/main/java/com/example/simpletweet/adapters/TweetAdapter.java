@@ -18,6 +18,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+
 public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> {
     Context context;
     List<Tweet> tweets;
@@ -50,20 +52,25 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView profileImageView;
         TextView screennameTextView;
+        TextView nameTextView;
         TextView bodyTextView;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             profileImageView = itemView.findViewById(R.id.profileImageView);
             screennameTextView = itemView.findViewById(R.id.screennameTextView);
+            nameTextView = itemView.findViewById(R.id.nameTextView);
             bodyTextView = itemView.findViewById(R.id.bodyTextView);
         }
 
         public void bind(Tweet tweet) {
             Glide.with(context)
                     .load(tweet.getAuthor().profileImageUrl)
+                    .centerCrop() // scale image to fill the entire ImageView
+                    .transform(new RoundedCornersTransformation(30, 20))
                     .into(profileImageView);
             screennameTextView.setText(tweet.getAuthor().screenName);
+            nameTextView.setText("@" + tweet.getAuthor().name);
             bodyTextView.setText(tweet.getBody());
         }
     }
