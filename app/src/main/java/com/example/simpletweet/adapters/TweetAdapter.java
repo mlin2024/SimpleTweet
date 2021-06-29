@@ -71,8 +71,8 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
                     .centerCrop() // scale image to fill the entire ImageView
                     .transform(new RoundedCornersTransformation(30, 20))
                     .into(profileImageView);
-            screennameTextView.setText(tweet.getAuthor().screenName);
-            nameTextView.setText("@" + tweet.getAuthor().name);
+            screennameTextView.setText(tweet.getAuthor().name);
+            nameTextView.setText("@" + tweet.getAuthor().screenName);
             bodyTextView.setText(tweet.getBody());
             timestampTextView.setText(tweet.getCreatedAt());
         }
