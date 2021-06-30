@@ -20,7 +20,6 @@ import com.example.simpletweet.TwitterClient;
 import com.example.simpletweet.adapters.TweetAdapter;
 import com.example.simpletweet.models.Tweet;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.parceler.Parcels;
 

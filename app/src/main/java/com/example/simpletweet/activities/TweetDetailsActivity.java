@@ -1,9 +1,11 @@
 package com.example.simpletweet.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,6 +22,7 @@ public class TweetDetailsActivity extends AppCompatActivity {
 
     Tweet tweet;
 
+    Toolbar detailsToolbar;
     ImageView profileImageView;
     TextView screennameTextView;
     TextView nameTextView;
@@ -32,6 +35,10 @@ public class TweetDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tweet_details);
 
+        detailsToolbar = findViewById(R.id.detailsToolbar);
+        setSupportActionBar(detailsToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         profileImageView = findViewById(R.id.profileImageView);
         screennameTextView = findViewById(R.id.screennameTextView);
         nameTextView = findViewById(R.id.nameTextView);
@@ -56,4 +63,16 @@ public class TweetDetailsActivity extends AppCompatActivity {
                 .into(contentImageView);
         timestampTextView.setText(tweet.getCreatedAt());
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

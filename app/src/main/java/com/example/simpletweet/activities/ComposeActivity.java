@@ -1,10 +1,12 @@
 package com.example.simpletweet.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +29,7 @@ public class ComposeActivity extends AppCompatActivity {
     public static final String TAG = "ComposeActivity";
 
     TwitterClient client;
+    Toolbar composeToolbar;
     TextInputLayout textInputLayout;
     EditText composeEditText;
     Button postButton;
@@ -37,6 +40,10 @@ public class ComposeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_compose);
 
         client = TwitterApp.getRestClient(this);
+        composeToolbar = findViewById(R.id.composeToolbar);
+        setSupportActionBar(composeToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         textInputLayout = findViewById(R.id.textInputLayout);
         textInputLayout.setCounterMaxLength(MAX_TWEET_LENGTH);
         composeEditText = findViewById(R.id.composeEditText);
@@ -81,5 +88,16 @@ public class ComposeActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
