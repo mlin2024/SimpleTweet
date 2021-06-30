@@ -69,10 +69,14 @@ public class TweetDetailsActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == android.R.id.home) {
-            finish();
+            this.supportFinishAfterTransition();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        finishAfterTransition();
+    }
 }

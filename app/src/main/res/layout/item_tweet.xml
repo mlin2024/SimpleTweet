@@ -10,6 +10,7 @@
 
     <ImageView
         android:id="@+id/profileImageView"
+        android:transitionName="profileImageAnimation"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
@@ -22,6 +23,7 @@
 
     <TextView
         android:id="@+id/screennameTextView"
+        android:transitionName="screennameAnimation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -46,6 +48,7 @@
 
             <TextView
                 android:id="@+id/nameTextView"
+                android:transitionName="nameAnimation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
@@ -67,6 +70,7 @@
 
     <TextView
         android:id="@+id/bodyTextView"
+        android:transitionName="bodyAnimation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/screennameTextView"
@@ -78,6 +82,7 @@
 
     <ImageView
         android:id="@+id/contentImageView"
+        android:transitionName="contentImageAnimation"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/bodyTextView"

@@ -1,5 +1,6 @@
 package com.example.simpletweet.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -10,7 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.util.Pair;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -110,9 +112,17 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
                 Intent intent = new Intent(context, TweetDetailsActivity.class);
 
-                // Wrap the movie in a parcel and attach it to the intent so it can be sent along with it
+                // Wrap the tweet in a parcel and attach it to the intent so it can be sent along with it
                 intent.putExtra(Tweet.class.getSimpleName(), Parcels.wrap(tweet));
-                context.startActivity(intent);
+
+                Pair<View, String> p1 = Pair.create((View)profileImageView, "profileImageAnimation");
+                Pair<View, String> p2 = Pair.create((View)screennameTextView, "screennameAnimation");
+                Pair<View, String> p3 = Pair.create((View)nameTextView, "nameAnimation");
+                Pair<View, String> p4 = Pair.create((View)bodyTextView, "bodyAnimation");
+                Pair<View, String> p5 = Pair.create((View)contentImageView, "contentImageAnimation");
+                ActivityOptionsCompat options = ActivityOptionsCompat.
+                        makeSceneTransitionAnimation((Activity) context, p1, p2, p3, p4, p5);
+                context.startActivity(intent, options.toBundle());
             }
         }
     }
