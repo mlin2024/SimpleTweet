@@ -70,6 +70,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         TextView nameTextView;
         TextView timestampTextView;
         TextView bodyTextView;
+        ImageView contentImageView;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
@@ -78,6 +79,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             nameTextView = itemView.findViewById(R.id.nameTextView);
             timestampTextView = itemView.findViewById(R.id.timestampTextView);
             bodyTextView = itemView.findViewById(R.id.bodyTextView);
+            contentImageView = itemView.findViewById(R.id.contentImageView);
         }
 
         @RequiresApi(api = Build.VERSION_CODES.Q)
@@ -92,6 +94,9 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             timestampTextView.setMinEms(tweet.getCreatedAt().length());
             timestampTextView.setText(" · " + tweet.getCreatedAt());
             bodyTextView.setText(tweet.getBody());
+            Glide.with(context)
+                    .load(tweet.contentUrl)
+                    .into(contentImageView);
         }
     }
 }

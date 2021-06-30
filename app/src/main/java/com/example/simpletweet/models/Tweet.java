@@ -21,7 +21,7 @@ public class Tweet {
     private static final int HOUR_MILLIS = 60 * MINUTE_MILLIS;
     private static final int DAY_MILLIS = 24 * HOUR_MILLIS;
 
-    public String body, createdAt;
+    public String body, createdAt, contentUrl;
     public User author;
 
     // Constructor
@@ -38,6 +38,8 @@ public class Tweet {
         tweet.body = jsonObject.getString("text");
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.author =  User.fromJson(jsonObject.getJSONObject("user"));
+        if (!jsonObject.getJSONObject("entities").has("media")) tweet.contentUrl = null;
+        else tweet.contentUrl = jsonObject.getJSONObject("entities").getJSONArray("media").getJSONObject(0).getString("media_url_https");
         return tweet;
     }
 
@@ -91,5 +93,9 @@ public class Tweet {
 
     public User getAuthor() {
         return author;
+    }
+
+    public String getContentUrl() {
+        return contentUrl;
     }
 }
