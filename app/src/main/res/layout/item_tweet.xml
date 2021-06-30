@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp">
+    android:layout_marginStart="5dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginEnd="5dp">
 
     <ImageView
         android:id="@+id/profileImageView"
@@ -28,36 +30,79 @@
         android:layout_toEndOf="@+id/profileImageView"
         tools:text="Screenname" />
 
-    <TextView
-        android:id="@+id/bodyTextView"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/blank"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/nameTextView"
+        android:layout_toEndOf="@id/screennameTextView"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_toEndOf="@+id/profileImageView"
-        tools:text="Tweet body" />
+        android:layout_marginTop="5dp">
 
+        <LinearLayout
+            android:id="@+id/message_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="50dp">
+
+            <TextView
+                android:id="@+id/nameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textColor="@android:color/secondary_text_dark"
+                tools:text="wrhrgfghyjtyjdbgbrdgftgdfggdfgdsggj" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/timestampTextView"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="-50dp"
+            android:layout_toRightOf="@id/message_container"
+            android:ellipsize="none"
+            android:singleLine="true"
+            android:textColor="@android:color/secondary_text_dark"
+            tools:text="yesterday" />
+    </RelativeLayout>
+<!--
     <TextView
         android:id="@+id/nameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/screennameTextView"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="2dp"
-        android:layout_toEndOf="@+id/profileImageView"
-        android:textSize="12sp"
-        tools:text="Name" />
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/screennameTextView"
+        android:ellipsize="end"
+        android:maxWidth="180dp"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@android:color/secondary_text_dark"
+        tools:text="fdasfdsafadsfadsfadsfdsafadsfa" />
 
     <TextView
         android:id="@+id/timestampTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="2dp"
-        android:textSize="12sp"
-        tools:text="0m" />
+        android:layout_marginEnd="5dp"
+        android:layout_toEndOf="@+id/nameTextView"
+        android:gravity="left"
+        android:maxLines="1"
+        android:singleLine="false"
+        android:textColor="@android:color/secondary_text_dark"
+        tools:text="yesterday" />
+-->
+    <TextView
+        android:id="@+id/bodyTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/screennameTextView"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_toEndOf="@+id/profileImageView"
+        tools:text="Tweet body" />
 </RelativeLayout>

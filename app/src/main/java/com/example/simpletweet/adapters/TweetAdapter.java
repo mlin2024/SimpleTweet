@@ -1,6 +1,7 @@
 package com.example.simpletweet.adapters;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -38,6 +40,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         return new ViewHolder(view);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
         Tweet tweet = tweets.get(position);
@@ -65,18 +68,19 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         ImageView profileImageView;
         TextView screennameTextView;
         TextView nameTextView;
-        TextView bodyTextView;
         TextView timestampTextView;
+        TextView bodyTextView;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             profileImageView = itemView.findViewById(R.id.profileImageView);
             screennameTextView = itemView.findViewById(R.id.screennameTextView);
             nameTextView = itemView.findViewById(R.id.nameTextView);
-            bodyTextView = itemView.findViewById(R.id.bodyTextView);
             timestampTextView = itemView.findViewById(R.id.timestampTextView);
+            bodyTextView = itemView.findViewById(R.id.bodyTextView);
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.Q)
         public void bind(Tweet tweet) {
             Glide.with(context)
                     .load(tweet.getAuthor().profileImageUrl)
@@ -85,8 +89,9 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
                     .into(profileImageView);
             screennameTextView.setText(tweet.getAuthor().name);
             nameTextView.setText("@" + tweet.getAuthor().screenName);
+            timestampTextView.setMinEms(tweet.getCreatedAt().length());
+            timestampTextView.setText(" · " + tweet.getCreatedAt());
             bodyTextView.setText(tweet.getBody());
-            timestampTextView.setText(tweet.getCreatedAt());
         }
     }
 }
