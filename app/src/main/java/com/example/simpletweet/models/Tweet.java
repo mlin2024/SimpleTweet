@@ -10,6 +10,7 @@ import org.parceler.Parcel;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -59,6 +60,30 @@ public class Tweet {
     }
 
     public String getCreatedAt() {
+        String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
+        SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
+        sf.setLenient(true);
+        try {
+            Date date = sf.parse(createdAt);
+            String[] arr = date.toString().split(" ");
+            int hour = date.getHours();
+            int min = date.getMinutes();
+            String time = "";
+            if (hour > 12) {
+                hour -= 12;
+                time = hour + ":" + min + " PM";
+            }
+            else {
+                time = hour + ":" + min + " AM";
+            }
+            return arr[0] + " " + arr[1] + " " + arr[2] + " · " + time;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+    public String getCreatedAtRelative() {
             String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
             SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
             sf.setLenient(true);

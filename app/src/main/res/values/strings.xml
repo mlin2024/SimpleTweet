@@ -9,5 +9,6 @@
     <string name="compose">Compose a Tweet</string>
     <string name="timeline">Timeline</string>
     <string name="login">Login</string>
+    <string name="details">Details</string>
 
 </resources>

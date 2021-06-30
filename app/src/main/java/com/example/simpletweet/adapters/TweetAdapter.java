@@ -1,6 +1,7 @@
 package com.example.simpletweet.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.simpletweet.R;
+import com.example.simpletweet.activities.TweetDetailsActivity;
 import com.example.simpletweet.models.Tweet;
 
 import org.jetbrains.annotations.NotNull;
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -40,7 +43,6 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         return new ViewHolder(view);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
         Tweet tweet = tweets.get(position);
@@ -64,7 +66,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView profileImageView;
         TextView screennameTextView;
         TextView nameTextView;
@@ -80,9 +82,10 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             timestampTextView = itemView.findViewById(R.id.timestampTextView);
             bodyTextView = itemView.findViewById(R.id.bodyTextView);
             contentImageView = itemView.findViewById(R.id.contentImageView);
+
+            itemView.setOnClickListener(this);
         }
 
-        @RequiresApi(api = Build.VERSION_CODES.Q)
         public void bind(Tweet tweet) {
             Glide.with(context)
                     .load(tweet.getAuthor().profileImageUrl)
@@ -91,12 +94,26 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
                     .into(profileImageView);
             screennameTextView.setText(tweet.getAuthor().name);
             nameTextView.setText("@" + tweet.getAuthor().screenName);
-            timestampTextView.setMinEms(tweet.getCreatedAt().length());
-            timestampTextView.setText(" · " + tweet.getCreatedAt());
+            timestampTextView.setMinEms(tweet.getCreatedAtRelative().length());
+            timestampTextView.setText(" · " + tweet.getCreatedAtRelative());
             bodyTextView.setText(tweet.getBody());
             Glide.with(context)
                     .load(tweet.contentUrl)
                     .into(contentImageView);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) { // Check if position is valid
+                Tweet tweet = tweets.get(position);
+
+                Intent intent = new Intent(context, TweetDetailsActivity.class);
+
+                // Wrap the movie in a parcel and attach it to the intent so it can be sent along with it
+                intent.putExtra(Tweet.class.getSimpleName(), Parcels.wrap(tweet));
+                context.startActivity(intent);
+            }
         }
     }
 }
