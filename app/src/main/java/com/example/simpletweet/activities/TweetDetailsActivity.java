@@ -52,8 +52,7 @@ public class TweetDetailsActivity extends AppCompatActivity {
 
         Glide.with(this)
                 .load(tweet.getAuthor().profileImageUrl)
-                .centerCrop() // scale image to fill the entire ImageView
-                .transform(new RoundedCornersTransformation(30, 20))
+                .circleCrop()
                 .into(profileImageView);
         screennameTextView.setText(tweet.getAuthor().name);
         nameTextView.setText("@" + tweet.getAuthor().screenName);

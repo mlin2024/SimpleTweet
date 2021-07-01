@@ -96,8 +96,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         public void bind(Tweet tweet) {
             Glide.with(context)
                     .load(tweet.getAuthor().profileImageUrl)
-                    .centerCrop() // scale image to fill the entire ImageView
-                    .transform(new RoundedCornersTransformation(30, 20))
+                    .circleCrop()
                     .into(profileImageView);
             screennameTextView.setText(tweet.getAuthor().name);
             nameTextView.setText("@" + tweet.getAuthor().screenName);
