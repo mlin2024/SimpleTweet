@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Parcel
 public class Tweet {
@@ -48,7 +50,12 @@ public class Tweet {
         else {
             tweet.body = jsonObject.getString("text");
         }
-        Log.d(TAG, jsonObject.getBoolean("truncated") + " " + tweet.body);
+
+        // Logic to remove image URLs from tweet body
+        Pattern url = Pattern.compile("https://t.co/.*");
+        Matcher body = url.matcher(tweet.body);
+        if (body.find()) tweet.body = tweet.body.replaceAll("https://t.co/.*", "");
+
         tweet.createdAt = jsonObject.getString("created_at");
         if (!jsonObject.getJSONObject("entities").has("media")) tweet.contentUrl = null;
         else tweet.contentUrl = jsonObject.getJSONObject("entities").getJSONArray("media").getJSONObject(0).getString("media_url_https");
