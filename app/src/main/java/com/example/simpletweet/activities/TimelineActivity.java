@@ -102,7 +102,8 @@ public class TimelineActivity extends AppCompatActivity {
                         lowest_max_id = Math.min(lowest_max_id, id);
                     }
                     tweets.addAll(newTweets);
-                    tweetAdapter.notifyItemRangeInserted(tweets.size() - NUM_TO_LOAD, NUM_TO_LOAD);
+                    if (tweets.size() < NUM_TO_LOAD) tweetAdapter.notifyDataSetChanged();
+                    else tweetAdapter.notifyItemRangeInserted(Math.max(0, tweets.size() - NUM_TO_LOAD), Math.min(tweets.size(), NUM_TO_LOAD));
                 } catch (JSONException e) {
                     Log.e(TAG, "JSON exception");
                     e.printStackTrace();
