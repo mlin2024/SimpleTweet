@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.example.simpletweet.EndlessRecyclerViewScrollListener;
 import com.example.simpletweet.R;
 import com.example.simpletweet.TwitterApp;
 import com.example.simpletweet.TwitterClient;
@@ -31,13 +32,17 @@ import okhttp3.Headers;
 public class TimelineActivity extends AppCompatActivity {
     public static final String TAG = "TimelineActivity";
     private final int COMPOSE_REQUEST_CODE = 413;
+    public static final int NUM_TO_LOAD = 25;
 
+    long lowest_max_id;
     TwitterClient client;
     List<Tweet> tweets;
     TweetAdapter tweetAdapter;
     Toolbar timelineToolbar;
+    LinearLayoutManager linearLayoutManager;
     RecyclerView timelineRecyclerView;
-    private SwipeRefreshLayout swipeContainer;
+    SwipeRefreshLayout swipeContainer;
+    EndlessRecyclerViewScrollListener scrollListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,15 +50,27 @@ public class TimelineActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timeline);
 
         // Set all member variables to their appropriate values
+        lowest_max_id = Long.MAX_VALUE;
         client = TwitterApp.getRestClient(this);
         tweets = new ArrayList<>();
         tweetAdapter = new TweetAdapter(this, tweets);
         timelineToolbar = findViewById(R.id.timelineToolbar);
         setSupportActionBar(timelineToolbar);
+        linearLayoutManager = new LinearLayoutManager(this);
         timelineRecyclerView = findViewById(R.id.timelineRecyclerView);
-        timelineRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        timelineRecyclerView.setLayoutManager(linearLayoutManager);
         timelineRecyclerView.setAdapter(tweetAdapter);
         swipeContainer = findViewById(R.id.swipeContainer);
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+                populateHomeTimeline();
+            }
+        };
+
+        timelineRecyclerView.addOnScrollListener(scrollListener);
 
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -78,8 +95,14 @@ public class TimelineActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 try {
-                    tweets.addAll(Tweet.fromJsonArray(json.jsonArray));
-                    tweetAdapter.notifyDataSetChanged();
+                    ArrayList<Tweet> newTweets = new ArrayList<>();
+                    newTweets.addAll(Tweet.fromJsonArray(json.jsonArray));
+                    for (int i = 0; i < newTweets.size(); i++) {
+                        long id = newTweets.get(i).getId();
+                        lowest_max_id = Math.min(lowest_max_id, id);
+                    }
+                    tweets.addAll(newTweets);
+                    tweetAdapter.notifyItemRangeInserted(tweets.size() - NUM_TO_LOAD, NUM_TO_LOAD);
                 } catch (JSONException e) {
                     Log.e(TAG, "JSON exception");
                     e.printStackTrace();
@@ -91,7 +114,7 @@ public class TimelineActivity extends AppCompatActivity {
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
                 Log.e(TAG, "onFailure called: " + response, throwable);
             }
-        });
+        }, lowest_max_id - 1);
     }
 
     public void fetchTimelineAsync() {
@@ -119,7 +142,7 @@ public class TimelineActivity extends AppCompatActivity {
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
                 Log.e(TAG, "onFailure called: " + response, throwable);
             }
-        });
+        }, 0);
     }
 
     @Override

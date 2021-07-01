@@ -1,10 +1,12 @@
 package com.example.simpletweet;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.codepath.oauth.OAuthBaseClient;
+import com.example.simpletweet.activities.TimelineActivity;
 import com.github.scribejava.apis.TwitterApi;
 import com.github.scribejava.core.builder.api.BaseApi;
 
@@ -21,6 +23,7 @@ import com.github.scribejava.core.builder.api.BaseApi;
  * 
  */
 public class TwitterClient extends OAuthBaseClient {
+	public static final String TAG = "TwitterClient";
 	public static final BaseApi REST_API_INSTANCE = TwitterApi.instance();
 	public static final String REST_URL = "https://api.twitter.com/1.1";
 	public static final String REST_CONSUMER_KEY = BuildConfig.CONSUMER_KEY;
@@ -43,12 +46,13 @@ public class TwitterClient extends OAuthBaseClient {
 	}
 
 	// DEFINE METHODS for different API endpoints here
-	public void getHomeTimeline(JsonHttpResponseHandler handler) {
+	public void getHomeTimeline(JsonHttpResponseHandler handler, long max_id) {
+		Log.e(TAG, "max_id: " + max_id);
 		String apiUrl = getApiUrl("statuses/home_timeline.json");
 		// Can specify query string params directly or through RequestParams.
 		RequestParams params = new RequestParams();
-		params.put("count", 25);
-		params.put("since_id", 1);
+		params.put("count", TimelineActivity.NUM_TO_LOAD);
+		params.put("max_id", max_id);
 		client.get(apiUrl, params, handler);
 	}
 

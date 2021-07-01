@@ -24,6 +24,7 @@ public class Tweet {
 
     public String body, createdAt, contentUrl;
     public User author;
+    public long id;
 
     // Constructor
     public Tweet(JSONObject jsonObject) throws JSONException {
@@ -38,9 +39,10 @@ public class Tweet {
         Tweet tweet = new Tweet();
         tweet.body = jsonObject.getString("text");
         tweet.createdAt = jsonObject.getString("created_at");
-        tweet.author =  User.fromJson(jsonObject.getJSONObject("user"));
         if (!jsonObject.getJSONObject("entities").has("media")) tweet.contentUrl = null;
         else tweet.contentUrl = jsonObject.getJSONObject("entities").getJSONArray("media").getJSONObject(0).getString("media_url_https");
+        tweet.author =  User.fromJson(jsonObject.getJSONObject("user"));
+        tweet.id = Long.parseLong(jsonObject.getString("id"));
         return tweet;
     }
 
@@ -116,11 +118,15 @@ public class Tweet {
             return "";
     }
 
+    public String getContentUrl() {
+        return contentUrl;
+    }
+
     public User getAuthor() {
         return author;
     }
 
-    public String getContentUrl() {
-        return contentUrl;
+    public long getId() {
+        return id;
     }
 }
