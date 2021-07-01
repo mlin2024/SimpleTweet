@@ -20,6 +20,7 @@ import com.example.simpletweet.models.Tweet;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.parceler.Parcels;
 
 import okhttp3.Headers;
@@ -66,12 +67,29 @@ public class ComposeActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(int statusCode, Headers headers, JSON json) {
                             try {
-                                Tweet tweet = Tweet.fromJson(json.jsonObject);
+                                final Tweet[] tweet = new Tweet[1];
+                                client.getSingleTweet(new JsonHttpResponseHandler() {
+                                    @Override
+                                    public void onSuccess(int statusCode, Headers headers, JSON json) {
+                                        try {
+                                            tweet[0] = Tweet.fromJson(json.jsonObject);
+                                        } catch (JSONException e) {
+                                            Log.e(TAG, "JSON exception");
+                                            e.printStackTrace();
+                                        }
+                                        Log.i(TAG, "onSuccess called");
+                                    }
+
+                                    @Override
+                                    public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                                        Log.e(TAG, "onFailure called: " + response, throwable);
+                                    }
+                                }, json.jsonObject.getString("id_str"));
                                 Intent intent = new Intent();
-                                intent.putExtra(Tweet.class.getSimpleName(), Parcels.wrap(tweet));
+                                intent.putExtra(Tweet.class.getSimpleName(), Parcels.wrap(tweet[0]));
                                 setResult(RESULT_OK, intent);
                                 finish();
-                                Log.i(TAG, "New tweet: " + tweet.body);
+                                Log.i(TAG, "New tweet: " + tweet[0].body);
                             } catch (JSONException e) {
                                 Log.e(TAG, "JSON exception");
                                 e.printStackTrace();

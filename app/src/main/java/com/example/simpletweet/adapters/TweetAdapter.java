@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -71,19 +72,23 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView profileImageView;
         TextView screennameTextView;
+        LinearLayout message_container;
         TextView nameTextView;
         TextView timestampTextView;
         TextView bodyTextView;
         ImageView contentImageView;
+        TextView retweetTextView;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             profileImageView = itemView.findViewById(R.id.profileImageView);
             screennameTextView = itemView.findViewById(R.id.screennameTextView);
             nameTextView = itemView.findViewById(R.id.nameTextView);
+            message_container = itemView.findViewById(R.id.message_container);
             timestampTextView = itemView.findViewById(R.id.timestampTextView);
             bodyTextView = itemView.findViewById(R.id.bodyTextView);
             contentImageView = itemView.findViewById(R.id.contentImageView);
+            retweetTextView = itemView.findViewById(R.id.retweetTextView);
 
             itemView.setOnClickListener(this);
         }
@@ -96,12 +101,14 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
                     .into(profileImageView);
             screennameTextView.setText(tweet.getAuthor().name);
             nameTextView.setText("@" + tweet.getAuthor().screenName);
-            timestampTextView.setMinEms(tweet.getCreatedAtRelative().length());
+            int timestampLen = tweet.getCreatedAtRelative().length();
             timestampTextView.setText(" · " + tweet.getCreatedAtRelative());
             bodyTextView.setText(tweet.getBody());
             Glide.with(context)
                     .load(tweet.contentUrl)
                     .into(contentImageView);
+            if (tweet.retweetedBy != null) retweetTextView.setText("Retweeted by @"+tweet.retweetedBy);
+            else retweetTextView.setHeight(0);
         }
 
         @Override

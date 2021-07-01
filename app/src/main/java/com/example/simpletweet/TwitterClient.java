@@ -52,7 +52,8 @@ public class TwitterClient extends OAuthBaseClient {
 		// Can specify query string params directly or through RequestParams.
 		RequestParams params = new RequestParams();
 		params.put("count", TimelineActivity.NUM_TO_LOAD);
-		params.put("max_id", max_id);
+		if (max_id > 0) params.put("max_id", max_id);
+		params.put("tweet_mode", "extended");
 		client.get(apiUrl, params, handler);
 	}
 
@@ -62,6 +63,15 @@ public class TwitterClient extends OAuthBaseClient {
 		RequestParams params = new RequestParams();
 		params.put("status", tweetBody);
 		client.post(apiUrl, params, "", handler);
+	}
+
+	public void getSingleTweet(JsonHttpResponseHandler handler, String id) {
+		String apiUrl = getApiUrl("statuses/show.json");
+		// Can specify query string params directly or through RequestParams.
+		RequestParams params = new RequestParams();
+		params.put("id", id);
+		params.put("tweet_mode", "extended");
+		client.get(apiUrl, params, handler);
 	}
 
 	/* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint

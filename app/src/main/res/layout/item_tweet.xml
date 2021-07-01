@@ -8,53 +8,54 @@
     android:layout_marginTop="5dp"
     android:layout_marginEnd="5dp"
     android:clickable="true"
-    android:foreground="?android:attr/selectableItemBackground">>
+    android:foreground="?android:attr/selectableItemBackground">
 
     <ImageView
         android:id="@+id/profileImageView"
-        android:transitionName="profileImageAnimation"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_below="@id/retweetTextView"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
+        android:transitionName="profileImageAnimation"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/screennameTextView"
-        android:transitionName="screennameAnimation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/retweetTextView"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/profileImageView"
+        android:transitionName="screennameAnimation"
         tools:text="Screenname" />
 
     <RelativeLayout
         android:id="@+id/blank"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/screennameTextView"
+        android:layout_below="@id/retweetTextView"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@id/screennameTextView">
 
         <LinearLayout
             android:id="@+id/message_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingRight="50dp">
+            android:paddingEnd="70dp">
 
             <TextView
                 android:id="@+id/nameTextView"
-                android:transitionName="nameAnimation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
                 android:textColor="@android:color/secondary_text_dark"
+                android:transitionName="nameAnimation"
                 tools:text="wrhrgfghyjtyjdbgbrdgftgdfggdfgdsggj" />
         </LinearLayout>
 
@@ -62,8 +63,8 @@
             android:id="@+id/timestampTextView"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="-50dp"
-            android:layout_toRightOf="@id/message_container"
+            android:layout_marginStart="-70dp"
+            android:layout_toEndOf="@id/message_container"
             android:ellipsize="none"
             android:singleLine="true"
             android:textColor="@android:color/secondary_text_dark"
@@ -95,4 +96,14 @@
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
         tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/retweetTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="5dp"
+        android:visibility="visible"
+        tools:text="Retweeted by @dfbgtbvfdcs" />
 </RelativeLayout>

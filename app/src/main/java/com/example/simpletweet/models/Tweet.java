@@ -22,7 +22,7 @@ public class Tweet {
     private static final int HOUR_MILLIS = 60 * MINUTE_MILLIS;
     private static final int DAY_MILLIS = 24 * HOUR_MILLIS;
 
-    public String body, createdAt, contentUrl;
+    public String body, createdAt, contentUrl, retweetedBy;
     public User author;
     public long id;
 
@@ -37,7 +37,18 @@ public class Tweet {
     // Returns a single tweet from a JSON object
     public static Tweet fromJson(JSONObject jsonObject) throws JSONException {
         Tweet tweet = new Tweet();
-        tweet.body = jsonObject.getString("text");
+        if (jsonObject.has("retweeted_status")) {
+            tweet.retweetedBy = User.fromJson(jsonObject.getJSONObject("user")).name;
+            jsonObject = jsonObject.getJSONObject("retweeted_status");
+        }
+        else tweet.retweetedBy = null;
+        if (jsonObject.has("full_text")) {
+            tweet.body = jsonObject.getString("full_text");
+        }
+        else {
+            tweet.body = jsonObject.getString("text");
+        }
+        Log.d(TAG, jsonObject.getBoolean("truncated") + " " + tweet.body);
         tweet.createdAt = jsonObject.getString("created_at");
         if (!jsonObject.getJSONObject("entities").has("media")) tweet.contentUrl = null;
         else tweet.contentUrl = jsonObject.getJSONObject("entities").getJSONArray("media").getJSONObject(0).getString("media_url_https");
