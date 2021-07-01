@@ -103,7 +103,8 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             nameTextView.setText("@" + tweet.getAuthor().screenName);
             int timestampLen = tweet.getCreatedAtRelative().length();
             timestampTextView.setText(" · " + tweet.getCreatedAtRelative());
-            bodyTextView.setText(tweet.getBody());
+            if (tweet.getBody().length() == 0) bodyTextView.setHeight(0);
+            else bodyTextView.setText(tweet.getBody());
             Glide.with(context)
                     .load(tweet.contentUrl)
                     .into(contentImageView);
